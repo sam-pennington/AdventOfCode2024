@@ -98,8 +98,8 @@ def main() -> None:
         if iterations % 10 == 0:
             print(f"Iteration: {iterations} of {max_iterations}", end="\r")
 
-        row_modify = step[0]
-        col_modify = step[1]
+        row_modify: int = step[0]
+        col_modify: int = step[1]
 
         # Direct in front of the guard or the guard itself
         if (row_modify == direct_front[0] and col_modify == direct_front[1]) or (row_modify == guard_position[0] and col_modify == guard_position[1]):
