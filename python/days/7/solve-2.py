@@ -26,8 +26,8 @@ def valid(bundle: tuple[int, list[int]]) -> bool:
             elif op == '*':
                 result = operator.mul(operand_a, operand_b)
             else:
-                op_a_as_str = str(operand_a)
-                op_b_as_str = str(operand_b)
+                op_a_as_str: str = str(operand_a)
+                op_b_as_str: str = str(operand_b)
                 result = int(op_a_as_str + op_b_as_str)
             operand_a = result
         if result == bundle[0]:
