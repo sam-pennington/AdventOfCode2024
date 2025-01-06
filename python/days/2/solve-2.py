@@ -12,9 +12,9 @@ def report_safe(report: list[int]) -> bool:
     for idx, level in enumerate(report):
         if idx == 0: continue
         if level == report[idx - 1]: return False
-        levelIncreasing: bool = level > report[idx - 1]
-        if increasing is None: increasing = levelIncreasing
-        if increasing != levelIncreasing: return False
+        level_increasing: bool = level > report[idx - 1]
+        if increasing is None: increasing = level_increasing
+        if increasing != level_increasing: return False
         delta: int = abs(level - report[idx - 1])
         if delta < 1 or delta > 3: return False
     return True
@@ -22,15 +22,15 @@ def report_safe(report: list[int]) -> bool:
 def naive_dampen(report: list[int]) -> bool:
     if report_safe(report): return True
     for idx in range(len(report)):
-        moderatedReport = copy.copy(report)
-        moderatedReport.pop(idx)
-        if report_safe(moderatedReport): return True
+        moderated_report = copy.copy(report)
+        moderated_report.pop(idx)
+        if report_safe(moderated_report): return True
     return False
 
 def main() -> None:
     reports: list[list[int]] = load_reports('puzzle-input-2.txt')
-    safeCount: int = sum([1 if naive_dampen(report) else 0 for report in reports])
-    print(safeCount)
+    safe_count: int = sum([1 if naive_dampen(report) else 0 for report in reports])
+    print(safe_count)
 
 if __name__ == "__main__":
     main()

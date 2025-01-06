@@ -2,8 +2,8 @@
 import itertools
 
 def load_input(filename: str) -> tuple[list[int], dict[int, int]]:
-    listA: list[int] = []
-    listB: list[int] = []
+    list_a: list[int] = []
+    list_b: list[int] = []
     with open(filename, "r") as fb:
         for line in fb:
             a: int = None
@@ -12,20 +12,20 @@ def load_input(filename: str) -> tuple[list[int], dict[int, int]]:
             a, b = [int(x) for x in ' '.join(line.rstrip().split()).split()]
             assert(isinstance(a, int))
             assert(isinstance(b, int))
-            listA.append(a)
-            listB.append(b)
-    assert(len(listA) > 0)
-    assert(len(listA) == len(listB))
-    frequencySet: dict[int, int] = { k: len(list(v)) for k, v in itertools.groupby(sorted(listB)) }
-    return (listA, frequencySet)
+            list_a.append(a)
+            list_b.append(b)
+    assert(len(list_a) > 0)
+    assert(len(list_a) == len(list_b))
+    frequency_set: dict[int, int] = { k: len(list(v)) for k, v in itertools.groupby(sorted(list_b)) }
+    return (list_a, frequency_set)
 
-def calculate_similarity(listA: list[int], frequencySet: dict[int, int]) -> int:
-    return sum([(x * frequencySet.get(x, 0)) for x in listA])
+def calculate_similarity(list_a: list[int], frequency_set: dict[int, int]) -> int:
+    return sum([(x * frequency_set.get(x, 0)) for x in list_a])
 
 def main() -> None:
-    listA, frequencyListB = load_input('puzzle-input-2.txt')
-    listA = sorted(listA)
-    print(calculate_similarity(listA, frequencyListB))
+    list_a, frequency_set = load_input('puzzle-input-2.txt')
+    list_a = sorted(list_a)
+    print(calculate_similarity(list_a, frequency_set))
 
 
 if __name__ == "__main__":
