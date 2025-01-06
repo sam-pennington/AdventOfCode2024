@@ -2,17 +2,17 @@ import math
 
 def load_input(filename: str) -> tuple[list[str], list[str]]:
     with open(filename, "r") as fb:
-        precendenceRules = []
+        precendence_rules = []
         updates = []
-        precendenceLoading = True
+        precendence_loading = True
         for line in fb:
             if len(line.strip()) == 0:
-                precendenceLoading = False
-            elif precendenceLoading:
-                precendenceRules.append(line.rstrip())
+                precendence_loading = False
+            elif precendence_loading:
+                precendence_rules.append(line.rstrip())
             else:
                 updates.append([int(x.strip()) for x in line.rstrip().split(',')])
-        return (precendenceRules, updates)
+        return (precendence_rules, updates)
     
 def parse_rules(raw: list[str]) -> dict[int, list[int]]:
     result: dict[int, dict[str, list[int]]] = {}
@@ -30,18 +30,18 @@ def parse_rules(raw: list[str]) -> dict[int, list[int]]:
 def validate_update(rules: dict[int, list[int]], update: list[int]) -> bool:
     page_set: set[int] = set()
     for i in update:
-        for mustBeBefore in rules.get(i, []):
-            if mustBeBefore in page_set:
+        for must_be_before in rules.get(i, []):
+            if must_be_before in page_set:
                 return False
         page_set.add(i)
     return True
 
 def main() -> None:
-    rawPrecendenceRules, rawUpdates = load_input('puzzle-input-1.txt')
-    parsedRules: dict[int, list[int]] = parse_rules(rawPrecendenceRules)
+    rawprecendence_rules, raw_updates = load_input('puzzle-input-1.txt')
+    parsed_rules: dict[int, list[int]] = parse_rules(rawprecendence_rules)
     sum: int = 0
-    for update in rawUpdates:
-        if validate_update(parsedRules, update):
+    for update in raw_updates:
+        if validate_update(parsed_rules, update):
             mid: int = math.floor(len(update) // 2)
             val: int = update[mid]
             sum = sum + val
