@@ -5,19 +5,17 @@ def load(filename: str) -> list[tuple[int, list[int]]]:
     with open(filename, "r") as fb:
         result: list[tuple[int, list[int]]] = []
         for line in fb:
-            left: str = None
-            right: list[str] = None
             left, right = line.rstrip().split(':')
             numbers: list[int] = [int(x) for x in right.split()]
             result.append((int(left), numbers))
         return result
     
 def valid(bundle: tuple[int, list[int]]) -> bool:
-    operators: list[str] = list(itertools.product(["+", "*"], repeat=len(bundle[1]) - 1))
+    operators = list(itertools.product(["+", "*"], repeat=len(bundle[1]) - 1))
 
     for permutation in operators:
         operand_a: int = bundle[1][0]
-        operand_b: int = None
+        result = -1
         for idx, op in enumerate(permutation):
             operand_b = bundle[1][idx+1]
             result: int = operator.add(operand_a, operand_b) if op == '+' else operator.mul(operand_a, operand_b)

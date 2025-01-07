@@ -1,4 +1,5 @@
 import copy
+from typing import Union
 
 DIRECTION_NORTH: int = 0
 DIRECTION_EAST: int = 1
@@ -29,7 +30,7 @@ def find_start(floor: list[list[str]]) -> tuple[int, int]:
         for col_idx, col in enumerate(row):
             if col == '^':
                 return (row_idx, col_idx)
-    return None
+    return (-1, -1)
 
 def get_extents(floor: list[list[str]]) -> tuple[int, int]:
     return (len(floor), len(floor[0]))
@@ -50,13 +51,12 @@ def calculate_step(floor: list[list[str]], extents: tuple[int, int], guard_posit
 def path_guard_looped(floor: list[list[str]]) -> tuple[list[tuple[int, int]], bool]:
     steps: list[tuple[int, int]] = []
 
-    guard_position: tuple[int, int] = find_start(floor)
-    assert(guard_position is not None)
+    guard_position: Union[tuple[int, int], None] = find_start(floor)
     guard_direction: int = DIRECTION_NORTH
 
     extents: tuple[int, int] = get_extents(floor)
 
-    next_step: tuple[int, int] = None
+    next_step: Union[tuple[int, int], None] = None
 
     aborted: bool = False
     while ((next_step is None) or (in_bounds(extents, next_step))) and not aborted:
@@ -69,7 +69,7 @@ def path_guard_looped(floor: list[list[str]]) -> tuple[list[tuple[int, int]], bo
 
     return (steps, aborted)
 
-def add_obstruction(floor: list[list[str]], position: tuple[int, int]) -> list[list[str]]:
+def add_obstruction(floor: list[list[str]], position: tuple[int, int]) -> Union[list[list[str]], None]:
     copied: list[list[str]] = copy.deepcopy(floor)
     if not copied[position[0]][position[1]] == '#':
         copied[position[0]][position[1]] = '#'
@@ -81,10 +81,9 @@ def main() -> None:
     
     floor: list[list[str]] = load('puzzle-input-2.txt')
 
-    guard_position: tuple[int, int] = find_start(floor)
+    guard_position: Union[tuple[int, int], None] = find_start(floor)
     direct_front: tuple[int, int] = (guard_position[0] + MOVE_NORTH[0], guard_position[1] + MOVE_NORTH[1])
 
-    initial_path_steps: list[tuple[int, int]] = []
     initial_path_steps, _ = path_guard_looped(floor)
     initial_path_steps = set(initial_path_steps)
     max_iterations: int = len(initial_path_steps)
@@ -105,7 +104,7 @@ def main() -> None:
         if (row_modify == direct_front[0] and col_modify == direct_front[1]) or (row_modify == guard_position[0] and col_modify == guard_position[1]):
             continue
 
-        modified_floor: list[list[str]] = add_obstruction(floor, (row_modify, col_modify))
+        modified_floor: Union[list[list[str]], None] = add_obstruction(floor, (row_modify, col_modify))
         if modified_floor is not None:
             if path_guard_looped(modified_floor)[1]:
                 looped.append((row_modify, col_modify))

@@ -1,3 +1,5 @@
+from typing import Union
+
 DIRECTION_NORTH: int = 0
 DIRECTION_EAST: int = 1
 DIRECTION_SOUTH: int = 2
@@ -22,7 +24,7 @@ def load(filename: str) -> list[list[str]]:
             floor.append(list(line.rstrip()))
     return floor
 
-def find_start(floor: list[list[str]]) -> tuple[int, int]:
+def find_start(floor: list[list[str]]) -> Union[tuple[int, int], None]:
     for row_idx, row in enumerate(floor):
         for col_idx, col in enumerate(row):
             if col == '^':
@@ -45,16 +47,16 @@ def calculate_step(floor: list[list[str]], extents: tuple[int, int], guard_posit
         next = guard_position
     return (next, guard_direction)
    
-def path_guard(floor: list[list[str]]) -> list[tuple[int, int]]:
+def path_guard(floor: list[list[str]]) -> set[tuple[int, int]]:
     distinct_steps: set[tuple[int, int]] = set()
 
-    guard_position: tuple[int, int] = find_start(floor)
+    guard_position: Union[tuple[int, int], None] = find_start(floor)
     assert(guard_position is not None)
     guard_direction: int = DIRECTION_NORTH
 
     extents: tuple[int, int] = get_extents(floor)
 
-    next_step: tuple[int, int] = None
+    next_step: Union[tuple[int, int], None] = None
 
     while (next_step is None) or (in_bounds(extents, next_step)):
         if next_step is not None: 

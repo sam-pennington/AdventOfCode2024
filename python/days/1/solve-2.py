@@ -6,8 +6,6 @@ def load_input(filename: str) -> tuple[list[int], dict[int, int]]:
     list_b: list[int] = []
     with open(filename, "r") as fb:
         for line in fb:
-            a: int = None
-            b: int = None
             # Collapse multiple consequtive spaces and then split on space
             a, b = [int(x) for x in ' '.join(line.rstrip().split()).split()]
             assert(isinstance(a, int))

@@ -1,14 +1,15 @@
 import copy
+from typing import Union
 
 def load_reports(filename: str) -> list[list[int]]:
-    reports: list[list[int]] = None
+    reports: Union[list[list[int]], None] = None
     with open(filename, "r") as fb:
         reports = [[int(level) for level in line.rstrip().split()] for line in fb]
     assert(reports is not None)
     return reports
 
 def report_safe(report: list[int]) -> bool:
-    increasing: bool = None
+    increasing: Union[bool, None] = None
     for idx, level in enumerate(report):
         if idx == 0: continue
         if level == report[idx - 1]: return False

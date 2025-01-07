@@ -122,7 +122,7 @@ def find_se(word_grid: list[list[str]], row: int, col: int) -> bool:
     
 def find_xmas_count(word_grid: list[list[str]]) -> int:
     count: int = 0
-    funcs: Callable[[list[list[str]], int, int], bool] = [
+    funcs: list[Callable] = [
         find_n,
         find_s,
         find_e,

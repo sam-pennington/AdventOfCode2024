@@ -1,6 +1,7 @@
 import math
+from typing import Union
 
-def load_input(filename: str) -> tuple[list[str], list[str]]:
+def load_input(filename: str) -> tuple[list[str], list[list[int]]]:
     with open(filename, "r") as fb:
         precendence_rules = []
         updates = []
@@ -15,10 +16,10 @@ def load_input(filename: str) -> tuple[list[str], list[str]]:
         return (precendence_rules, updates)
     
 def parse_rules(raw: list[str]) -> dict[int, list[int]]:
-    result: dict[int, dict[str, list[int]]] = {}
+    result: dict[int, list[int]] = {}
     for l in raw:
-        a: int = None
-        b: int = None
+        a: Union[int, None] = None
+        b: Union[int, None] = None
         a, b = [int(x) for x in l.split("|")]
         if result.get(a) is None:
             result[a] = [b]

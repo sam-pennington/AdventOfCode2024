@@ -1,13 +1,13 @@
+from typing import Union
 
 def load_reports(filename: str) -> list[list[int]]:
-    reports: list[list[int]] = None
+    reports: list[list[int]] = []
     with open(filename, "r") as fb:
         reports = [[int(level) for level in line.rstrip().split()] for line in fb]
-    assert(reports is not None)
     return reports
 
 def report_safe(report: list[int]) -> tuple[bool, str]:
-    increasing: bool = None
+    increasing: Union[bool, None] = None
     for idx, level in enumerate(report):
         if idx == 0: continue
         if level == report[idx - 1]: return (False, "Duplicate Values")
